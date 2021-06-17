@@ -92,7 +92,7 @@ class BuildImages():
                 #If we are going to make an image for this template add an entry to templates array so we dont need to load its config again to rename/move the image
                 Templates += [(template, releaseroot, template_config['Version'])]
 
-                shutil.copytree(os.path.join(self.config['Containers']['Templates'], template), os.path.join(self.config['WorkingDirectory'], 'Shared', 'Templates', template))
+                shutil.copytree(os.path.join(self.config['Containers']['Templates'], template), '\\\\?\\' + os.path.realpath(os.path.join(self.config['WorkingDirectory'], 'Shared', 'Templates', template)))
 
         if len(Templates) > 0:
             #Now lets create the vm, fetching the image if required and then start it
@@ -121,7 +121,7 @@ class BuildImages():
         self.RunCmd('vagrant halt')
         self.RunCmd('vagrant destroy -f')
 
-        shutil.rmtree('Temp')
+        shutil.rmtree('\\\\?\\' + self.config['WorkingDirectory'])
 
 #This is called after the host vm boots inside vagrant
 class CreateImages():
